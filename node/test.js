@@ -1,30 +1,33 @@
 
 var http = require("http");
 var url = require("url");
+var uuid = require("node-uuid");
 
 http.createServer(function(request, response) {
 	response.writeHead(200, {"Content-Type": "text/plain"});
 
 	var query = url.parse(request.url, true, true).query;
-	console.log(query);
+	// console.log(query);
 
-	console.log('keys ' + Object.keys(query));
+	// console.log('keys ' + Object.keys(query));
 	for (key in query) {
 		console.log(key);
 	}
 
-	response.write(pickOneString(function() {
-		setTimeout(function() {}, 10000);
-		if (test === 'even') {
-			console.log('power');
-		} else {
-			console.log('whatever');
-		}
-	}));
+	// response.write(pickOneString(function() {
+	// 	setTimeout(function() {}, 10000);
+	// 	if (test === 'even') {
+	// 		console.log('power');
+	// 	} else {
+	// 		console.log('whatever');
+	// 	}
+	// }));
 
-	response.write("Hello World");
+	response.write(uuid.v4());
+	// response.write("Hello World");
 	response.end();
 }).listen(8888);
+console.log("Server has started.");
 
 function pickOne(callback) {
 	var d = new Date();
