@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema name="zwischensearch" version="1.0">
+
+    <defaultSearchField>all</defaultSearchField>
+
+    <fields>
+        <field name="id" type="uuid" indexed="true" required="true" stored="true" />
+        <field name="all" type="text" indexed="true" stored="false" termOffsets="true" termPositions="true" termVectors="true" />
+        <field name="date" type="long" indexed="true" multiValued="true" stored="false" />
+
+        <dynamicField name="_p1_*" type="text" indexed="true" multiValued="true" stored="false" />
+        <dynamicField name="_p2_*" type="text" indexed="true" multiValued="true" stored="false" />
+        <dynamicField name="_p3_*" type="text" indexed="true" multiValued="true" stored="false" />
+        <dynamicField name="_p4_*" type="text" indexed="true" multiValued="true" stored="false" />
+        <dynamicField name="_p5_*" type="text" indexed="true" multiValued="true" stored="false" />
+        <dynamicField name="_p6_*" type="text" indexed="true" multiValued="true" stored="false" />
+        <dynamicField name="_p7_*" type="text" indexed="true" multiValued="true" stored="false" />
+
+    </fields>
+
+    <solrQueryParser defaultOperator="AND" />
+
+    <types>
+        <fieldType name="long" class="solr.TrieLongField" positionIncrementGap="0" precisionStep="8" />
+        <fieldType name="string" class="solr.StrField" />
+        <fieldType name="text" class="solr.TextField" positionIncrementGap="100">
+            <analyzer type="index">
+                <charFilter class="solr.HTMLStripCharFilterFactory" />
+                <tokenizer class="solr.WhitespaceTokenizerFactory" />
+                <filter class="solr.WordDelimiterFilterFactory" catenateAll="0" catenateNumbers="1" catenateWords="1" generateNumberParts="1" generateWordParts="1" splitOnCaseChange="1" />
+                <filter class="solr.LowerCaseFilterFactory" />
+                <filter class="solr.PorterStemFilterFactory" />
+            </analyzer>
+            <analyzer type="query">
+                <charFilter class="solr.HTMLStripCharFilterFactory" />
+                <tokenizer class="solr.WhitespaceTokenizerFactory" />
+                <filter class="solr.WordDelimiterFilterFactory" catenateAll="0" catenateNumbers="0" catenateWords="0" generateNumberParts="1" generateWordParts="1" splitOnCaseChange="1" />
+                <filter class="solr.LowerCaseFilterFactory" />
+                <filter class="solr.PorterStemFilterFactory" />
+            </analyzer>
+        </fieldType>
+        <fieldType name="uuid" class="solr.UUIDField" />
+    </types>
+
+    <uniqueKey>id</uniqueKey>
+</schema>
