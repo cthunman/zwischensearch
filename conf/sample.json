@@ -1,0 +1,33 @@
+
+{
+	"_id" : "uuid",
+	"name" : "article",
+	"rule" : [
+		{
+			// example
+			"#content" : ".article"
+		},
+		{
+			"jquerySelector" : "required class or id",
+			// AND
+			"jquerySelector" : "required class or id",
+			// AND
+			"jquerySelector" : "required class or id"
+		},
+		// OR
+		{
+			"jquerySelector" : "required class or id",
+			// AND
+			"jquerySelector" : "required class or id",
+			// AND
+			"jquerySelector" : "required class or id"
+		}
+		// etc.
+	],
+	"fields" : {
+		"fieldName" : {
+			"cssSelector" : ".className or #idName",
+			"boostFactor" : 50 //digit
+		}
+	}
+}

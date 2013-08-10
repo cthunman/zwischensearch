@@ -1,44 +1,21 @@
 
-var http = require("http");
-var url = require("url");
+var http = require('http');
+var url = require('url');
+var mongo = require('./mongo');
+var util = require('util');
 
-function route(request, response) {
-
-	var responseText = '';
+function route(handle, request, response) {
+	
+	console.log("Routing " + request.url);
 	var pathname = url.parse(request.url).pathname;
 
-		if (pathname === "/solr") {
-			responseText = '';
-
-			var options = {
-				host: 'localhost',
-				port: 8080,
-				path: '/solr/select',
-				method: 'GET'
-			};
-
-			var req = http.request(options, function(res) {
-				res.setEncoding('utf8');
-		  		console.log("Got response: " + res.statusCode);
-				res.on('error', function(e) {
-		  		});
-	  			res.on('data', function(chunk) {
-					responseText += chunk;
-				});
-				res.on('end', function() {
-					// console.log(responseText);
-				});
-			});
-
-			req.end();
-			return responseText;
-			// response.write(responseText);
-
-		} else {
-
-			return 'notthing';
-			// response.write("boring");
-		}
+	if (typeof handle[pathname] === 'function') {
+		handle[pathname](request, response);
+	} else {
+		console.log("no request handle for " + pathname);
+		response.write("404");
+		response.end();
+	}
 }
 
 exports.route = route;

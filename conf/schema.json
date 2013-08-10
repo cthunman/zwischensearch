@@ -1,0 +1,30 @@
+{
+	"db" : "zwischensearch",
+	"collections" : {
+		"schema" : [
+			"_id",
+			"name",
+			"rule",
+			"fields"
+		],
+		"queue" : [
+			"_id",
+			"url"
+		],
+		"rawData" : [
+			"_id",
+			"url",
+			"data"
+		],
+		"parsedData" : [
+			"_id",
+			"schemaId",
+			"url",
+			"data",
+			"fields"
+		]
+	}
+}
+
+// schema/fields => parsedData/fields
+// schema/_id => parsedData/schemaId
