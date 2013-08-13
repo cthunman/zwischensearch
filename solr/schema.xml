@@ -4,17 +4,17 @@
     <defaultSearchField>all</defaultSearchField>
 
     <fields>
-        <field name="id" type="uuid" indexed="true" required="true" stored="true" />
-        <field name="all" type="text" indexed="true" stored="false" termOffsets="true" termPositions="true" termVectors="true" />
-        <field name="date" type="long" indexed="true" multiValued="true" stored="false" />
+        <field name="id" type="uuid" indexed="true" multiValued="false" required="true" stored="true" />
+        <field name="all" type="text" indexed="true" stored="true" termOffsets="true" termPositions="true" termVectors="true" />
+        <field name="date" type="long" indexed="true" multiValued="false" stored="true" />
 
-        <dynamicField name="_p1_*" type="text" indexed="true" multiValued="true" stored="false" />
-        <dynamicField name="_p2_*" type="text" indexed="true" multiValued="true" stored="false" />
-        <dynamicField name="_p3_*" type="text" indexed="true" multiValued="true" stored="false" />
-        <dynamicField name="_p4_*" type="text" indexed="true" multiValued="true" stored="false" />
-        <dynamicField name="_p5_*" type="text" indexed="true" multiValued="true" stored="false" />
-        <dynamicField name="_p6_*" type="text" indexed="true" multiValued="true" stored="false" />
-        <dynamicField name="_p7_*" type="text" indexed="true" multiValued="true" stored="false" />
+        <dynamicField name="_p1_*" type="text" indexed="true" multiValued="true" stored="true" />
+        <dynamicField name="_p2_*" type="text" indexed="true" multiValued="true" stored="true" />
+        <dynamicField name="_p3_*" type="text" indexed="true" multiValued="true" stored="true" />
+        <dynamicField name="_p4_*" type="text" indexed="true" multiValued="true" stored="true" />
+        <dynamicField name="_p5_*" type="text" indexed="true" multiValued="true" stored="true" />
+        <dynamicField name="_p6_*" type="text" indexed="true" multiValued="true" stored="true" />
+        <dynamicField name="_p7_*" type="text" indexed="true" multiValued="true" stored="true" />
 
     </fields>
 
