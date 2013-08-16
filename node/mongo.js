@@ -21,7 +21,7 @@ function queryMongo(context, collectionName, queryObj, callback) {
 	});
 }
 
-function insertMongo(context, collectionName, queryObj, callback) {
+function insertMongo(context, collectionName, obj, callback) {
 
 	var mongoAddress = 'mongodb://' + context + '/node';
 	MongoClient.connect(mongoAddress, function(err, db) {
@@ -32,7 +32,7 @@ function insertMongo(context, collectionName, queryObj, callback) {
 		var id = uuid.v4();
 
 		var collection = db.collection(collectionName);
-	    collection.insert(queryObj, function(err, docs) {
+	    collection.insert(obj, function(err, docs) {
 
 	        collection.count(function(err, count) {
 	        });

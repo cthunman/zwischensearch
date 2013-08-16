@@ -6,14 +6,13 @@ var cache = require('memory-cache');
 function saveObject(object, callback) {
 
 	var context = cache.get('context');
-	queryMongo(context, 'schema', '', function() {
-		for (result in results) {
-			applyRule(object, result['rule'], function(isType) {
+	queryMongo(context, 'schema', '', function(results) {
+		for (schema in results) {
+			passesRule(object, schema['rule'], function(isType) {
 				if (isType) {
-					// ?
-					for (field in result['fields']) {
-						findField(object, field, function(field) {
-
+					for (field in schema['fields']) {
+						findField(object, field, function(fieldContent) {
+							insertMongo(context, 'parsedData', obj);
 						});
 					}
 				}
@@ -22,7 +21,7 @@ function saveObject(object, callback) {
 	});
 }
 
-function applyRule(object, rule, callback) {
+function passesRule(object, rule, callback) {
 
 	var isType = true;
 	callback(isType);
@@ -31,6 +30,6 @@ function applyRule(object, rule, callback) {
 function findField(object, field, callback) {
 
 	// find the field in the text
-	var field = 'textfromfield';
-	callback(field);
+	var fieldContent = 'textfromfield';
+	callback(fieldContent);
 }
