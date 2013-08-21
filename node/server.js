@@ -9,6 +9,7 @@ function start(route, handle) {
 
 	var context = loadContext();
 	cache.put('context', context);
+	console.log('context loaded with params: ' + util.inspect(context));
 
 	function onRequest(request, response) {
 

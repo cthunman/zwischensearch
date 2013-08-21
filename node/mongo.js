@@ -6,7 +6,7 @@ var uuid = require('uuid');
 
 function queryMongo(context, collectionName, queryObj, callback) {
 
-	var mongoAddress = 'mongodb://' + context + '/node';
+	var mongoAddress = 'mongodb://' + context.mongodb + '/node';
 	MongoClient.connect(mongoAddress, function(err, db) {
 
 		if (err) {
@@ -17,29 +17,29 @@ function queryMongo(context, collectionName, queryObj, callback) {
 		collection.find(queryObj).toArray(function(err, results) {
 			callback(results);
 			db.close();
+			console.log('db closed after query');
 		});
 	});
 }
 
 function insertMongo(context, collectionName, obj, callback) {
 
-	var mongoAddress = 'mongodb://' + context + '/node';
+	var mongoAddress = 'mongodb://' + context.mongodb + '/node';
 	MongoClient.connect(mongoAddress, function(err, db) {
-
 		if (err) {
 		    throw err;
 		}
 		var id = uuid.v4();
-
+		obj['_id'] = id;
 		var collection = db.collection(collectionName);
 	    collection.insert(obj, function(err, docs) {
-
-	        collection.count(function(err, count) {
-	        });
-
+			if (err) {
+			    throw err;
+			}
 	        collection.find().toArray(function(err, results) {
 	            callback(results);
 	            db.close();
+	            console.log('db closed after insert');
 	        });
 	    });
 	});

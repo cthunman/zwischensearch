@@ -31,3 +31,24 @@
 		}
 	}
 }
+
+
+
+// sample type
+{
+	"_id" : "500",
+	"name" : "article",
+	"rule" : [
+		{
+			// example
+			"#content" : ".article"
+		}
+	],
+	"fields" : {
+		"title" : {
+			".header" : ".title",
+			"boostFactor" : 50
+		}
+	}
+}
+

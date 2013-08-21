@@ -2,6 +2,7 @@
 var http = require("http");
 var url = require("url");
 var uuid = require("node-uuid");
+var dataHandler = require("uuid");
 
 http.createServer(function(request, response) {
 	response.writeHead(200, {"Content-Type": "text/plain"});
