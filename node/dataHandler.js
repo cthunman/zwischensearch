@@ -21,12 +21,15 @@ function parseObject(object, callback) {
 		// get all schemas
 		function checkRuleLoop(i) {
 			if (i < results.length) {
+				console.log('results.length: ' + results.length);
 				var schema = results[i];
 				// console.log('\ncurrent schema\n' + util.inspect(schema));
 				checkRule(object, schema['rule'], function(isType) {
+					// check what type of schema we're working with
 					if (isType) {
 						var contentObject = { };
 						function findFieldLoop(j) {
+							console.log('loop: ' + j);
 							// console.log('\ncurrent schema.fields\t' + util.inspect(schema['fields']) + '\n');
 							if (schema['fields'] !== undefined && j < schema['fields'].length) {
 								var field = schema['fields'][j];
@@ -63,8 +66,19 @@ parseObject({ }, function(contentObject) {
 	if (contentObject !== undefined) {
 		console.log('content object ' + util.inspect(contentObject));
 	} else {
-		// console.log('content object is undefined, try again\n');
+		console.log('content object is undefined, try again\n');
 	}
 });
 
 exports.parseObject = parseObject;
+
+
+// use something like this to find the field out of a piece of content
+
+// var jsdom = require('jsdom').jsdom;
+// jsdom.env(
+// 	article, ["http://code.jquery.com/jquery.js"],
+// 	function (errors, window) {
+// 		console.log("body contents", window.$("body").text());
+// 	}
+// );
