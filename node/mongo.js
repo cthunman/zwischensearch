@@ -4,7 +4,7 @@ var util = require('util');
 var format = require('util').format;
 var uuid = require('uuid');
 
-function queryMongo(context, collectionName, queryObj, callback) {
+function query(context, collectionName, queryObj, callback) {
 
 	var mongoAddress = 'mongodb://' + context.mongodb + '/node';
 	MongoClient.connect(mongoAddress, function(err, db) {
@@ -22,7 +22,7 @@ function queryMongo(context, collectionName, queryObj, callback) {
 	});
 }
 
-function insertMongo(context, collectionName, obj, callback) {
+function insert(context, collectionName, obj, callback) {
 
 	var mongoAddress = 'mongodb://' + context.mongodb + '/node';
 	MongoClient.connect(mongoAddress, function(err, db) {
@@ -45,5 +45,5 @@ function insertMongo(context, collectionName, obj, callback) {
 	});
 }
 
-exports.insertMongo = insertMongo;
-exports.queryMongo = queryMongo;
+exports.insert = insert;
+exports.query = query;

@@ -4,42 +4,30 @@ var solr = require('./solr');
 var util = require('util');
 var cache = require('memory-cache');
 var fs = require('fs');
-
+var async = require('async');
+var jsdom = require('jsdom');
 var context = JSON.parse(fs.readFileSync('../conf/context.json', 'utf8'));
 var articleObj = JSON.parse(fs.readFileSync('../conf/article.json', 'utf8'));
 cache.put('context', context);
 
-// mongo.insertMongo(context, 'schema', articleObj, function(results) {
+// mongo.insert(context, 'schema', articleObj, function(results) {
 // 	console.log(util.inspect(results));
 // });
 
 function parseObject(object, callback) {
 
 	var context = cache.get('context');
-	// console.log('pre results');
-	mongo.queryMongo(context, 'schema', '', function(results) {
-		// get all schemas
+	// get all schemas
+	mongo.query(context, 'schema', '', function(schemaResults) {
 		function checkRuleLoop(i) {
-			if (i < results.length) {
-				console.log('results.length: ' + results.length);
-				var schema = results[i];
+			if (i < schemaResults.length) {
+				console.log('schemaResults.length: ' + schemaResults.length);
+				var schema = schemaResults[i];
 				// console.log('\ncurrent schema\n' + util.inspect(schema));
-				checkRule(object, schema['rule'], function(isType) {
+				checkRules(object, schema['rules'], function(isType) {
 					// check what type of schema we're working with
 					if (isType) {
-						var contentObject = { };
-						function findFieldLoop(j) {
-							console.log('loop: ' + j);
-							// console.log('\ncurrent schema.fields\t' + util.inspect(schema['fields']) + '\n');
-							if (schema['fields'] !== undefined && j < schema['fields'].length) {
-								var field = schema['fields'][j];
-								var fieldName = field['name'];
-								contentObject[fieldName] = findField(object, field);
-								findFieldLoop(j + 1);
-							} else {
-								callback(contentObject);
-							}
-	 					} findFieldLoop(0);
+						parseFields(object, schema, callback);
 					}
 				});
 				checkRuleLoop(i + 1);
@@ -48,21 +36,60 @@ function parseObject(object, callback) {
 	});
 }
 
-function checkRule(object, rule, callback) {
-
-	var isType = true;
-	callback(isType);
+function parseFields(object, schema, callback) {
+	var contentObject = { };
+	function findFieldLoop(j, contentObject) {
+		// console.log('loop: ' + j);
+		// console.log('\ncurrent schema.fields\t' + util.inspect(schema['fields']) + '\n');
+		if (schema['fields'] !== undefined && j < schema['fields'].length) {
+			var field = schema['fields'][j];
+			findField(object, field, contentObject, j + 1, findFieldLoop);
+		} else {
+			callback(contentObject);
+		}
+	} findFieldLoop(0, contentObject);	
 }
 
-function findField(object, field) {
+function checkRules(object, rules, callback) {
+
+	function ruleLoop(i, isType) {
+		if (i < rules.length) {
+			if (isType === true) {
+
+				jsdom.env(util.inspect(object), ["http://code.jquery.com/jquery.js"], function (errors, window) {
+					var check = rules[i]['findSelector'] + '' + rules[i]['testSelector'];
+					var fieldContent = window.$(check);
+					var testText = window.$(check).text();
+					console.log('check ' + check);
+					console.log('fieldContent ' + testText);
+				});
+			} else {
+				ruleLoop(rules.length, false);
+			}
+		} else if (isType === true) {
+			callback(true);
+		} else {
+			callback(false);
+		}
+	} ruleLoop(0, true);
+}
+
+function findField(object, field, contentObject, index, callback) {
 
 	// find the field in the text
-	var fieldContent = 'textfromfield';
+	var fieldName = field['name'];
+	var fieldSelector = field['cssSelector']
 	// console.log('fieldContent ' + fieldContent);
-	return fieldContent;
+
+	jsdom.env(util.inspect(object), ["http://code.jquery.com/jquery.js"], function (errors, window) {
+		var fieldContent = window.$(fieldSelector).text();
+		contentObject[fieldName] = fieldContent;
+		callback(index, contentObject);
+	});
 }
 
-parseObject({ }, function(contentObject) {
+var article = fs.readFileSync('../conf/articleSample.html', 'utf8');
+parseObject(article, function(contentObject) {
 	if (contentObject !== undefined) {
 		console.log('content object ' + util.inspect(contentObject));
 	} else {
@@ -71,14 +98,3 @@ parseObject({ }, function(contentObject) {
 });
 
 exports.parseObject = parseObject;
-
-
-// use something like this to find the field out of a piece of content
-
-// var jsdom = require('jsdom').jsdom;
-// jsdom.env(
-// 	article, ["http://code.jquery.com/jquery.js"],
-// 	function (errors, window) {
-// 		console.log("body contents", window.$("body").text());
-// 	}
-// );

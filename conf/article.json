@@ -1,6 +1,6 @@
 {
 	"name" : "article",
-	"rule" : [
+	"rules" : [
 		{
 			"findSelector" : "#content",
 			"testSelector" : ".article"

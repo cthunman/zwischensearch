@@ -9,7 +9,7 @@ function query (request, response) {
 	var requestObj = url.parse(request.url, true);	
 	var queryObj = requestObj.query;
 
-	mongo.queryMongo(context, 'node', queryObj, function(results) {
+	mongo.query(context, 'node', queryObj, function(results) {
 		response.write(util.inspect(results));
 		response.end();
 	});
@@ -20,7 +20,7 @@ function insert (request, response) {
 	var requestObj = url.parse(request.url, true);
 	var queryObj = requestObj.query;
 
-	mongo.insertMongo(context, 'node', queryObj, function(results) {
+	mongo.insert(context, 'node', queryObj, function(results) {
 		response.write(util.inspect(results));
 		response.end();
 	});
