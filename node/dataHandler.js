@@ -4,50 +4,58 @@ var solr = require('./solr');
 var util = require('util');
 var cache = require('memory-cache');
 var fs = require('fs');
-var async = require('async');
 var jsdom = require('jsdom');
 var context = JSON.parse(fs.readFileSync('../conf/context.json', 'utf8'));
-var articleObj = JSON.parse(fs.readFileSync('../conf/article.json', 'utf8'));
-cache.put('context', context);
 
-// mongo.insert(context, 'schema', articleObj, function(results) {
-// 	console.log(util.inspect(results));
-// });
+cache.put('context', context);
 
 function parseObject(object, callback) {
 
 	var context = cache.get('context');
 	// get all schemas
 	mongo.query(context, 'schema', '', function(schemaResults) {
-		function checkRuleLoop(i) {
+
+		function checkRuleLoop(i, foundType) {
 			if (i < schemaResults.length) {
-				console.log('schemaResults.length: ' + schemaResults.length);
 				var schema = schemaResults[i];
-				// console.log('\ncurrent schema\n' + util.inspect(schema));
 				checkRules(object, schema['rules'], function(isType) {
 					// check what type of schema we're working with
 					if (isType) {
+						foundType = true;
 						parseFields(object, schema, callback);
 					}
 				});
-				checkRuleLoop(i + 1);
+				checkRuleLoop(i + 1, foundType);
 			}
-		} checkRuleLoop(0);
+		} checkRuleLoop(0, false);
 	});
 }
 
 function parseFields(object, schema, callback) {
 	var contentObject = { };
 	function findFieldLoop(j, contentObject) {
-		// console.log('loop: ' + j);
-		// console.log('\ncurrent schema.fields\t' + util.inspect(schema['fields']) + '\n');
 		if (schema['fields'] !== undefined && j < schema['fields'].length) {
 			var field = schema['fields'][j];
 			findField(object, field, contentObject, j + 1, findFieldLoop);
 		} else {
+			contentObject['all'] = util.inspect(object);
+			contentObject['schemaId'] = schema['_id'];
 			callback(contentObject);
 		}
-	} findFieldLoop(0, contentObject);	
+	} findFieldLoop(0, contentObject);
+}
+
+function findField(object, field, contentObject, index, callback) {
+
+	// find the field in the text
+	var fieldName = field['name'];
+	var fieldSelector = field['cssSelector']
+
+	jsdom.env(util.inspect(object), ["http://code.jquery.com/jquery.js"], function (errors, window) {
+		var fieldContent = window.$(fieldSelector).text();
+		contentObject[fieldName] = fieldContent;
+		callback(index, contentObject);
+	});
 }
 
 function checkRules(object, rules, callback) {
@@ -72,28 +80,5 @@ function checkRules(object, rules, callback) {
 		}
 	} ruleLoop(0, true);
 }
-
-function findField(object, field, contentObject, index, callback) {
-
-	// find the field in the text
-	var fieldName = field['name'];
-	var fieldSelector = field['cssSelector']
-	// console.log('fieldContent ' + fieldContent);
-
-	jsdom.env(util.inspect(object), ["http://code.jquery.com/jquery.js"], function (errors, window) {
-		var fieldContent = window.$(fieldSelector).text();
-		contentObject[fieldName] = fieldContent;
-		callback(index, contentObject);
-	});
-}
-
-var article = fs.readFileSync('../conf/articleSample.html', 'utf8');
-parseObject(article, function(contentObject) {
-	if (contentObject !== undefined) {
-		console.log('content object ' + util.inspect(contentObject));
-	} else {
-		console.log('content object is undefined, try again\n');
-	}
-});
 
 exports.parseObject = parseObject;

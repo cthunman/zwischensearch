@@ -17,7 +17,6 @@ function query(context, collectionName, queryObj, callback) {
 		collection.find(queryObj).toArray(function(err, results) {
 			callback(results);
 			db.close();
-			console.log('db closed after query');
 		});
 	});
 }
@@ -36,11 +35,8 @@ function insert(context, collectionName, obj, callback) {
 			if (err) {
 			    throw err;
 			}
-	        collection.find().toArray(function(err, results) {
-	            callback(results);
-	            db.close();
-	            console.log('db closed after insert');
-	        });
+			callback();
+			db.close();
 	    });
 	});
 }

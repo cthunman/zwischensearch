@@ -1,46 +1,50 @@
 {
-	"name" : "article",
+	"name" : "blogPost",
 	"rules" : [
 		{
 			"findSelector" : "#content",
-			"testSelector" : ".article"
+			"testSelector" : ".blag"
+		},
+		{
+			"findSelector" : "#content",
+			"testSelector" : ".body"
 		}
 	],
 	"fields" : [
 		{
 			"name" : "title",
 			"cssSelector" : "h1",
-			"boostFactor" : 1
+			"boostFactor" : 50
 		},
 		{
 			"name" : "author",
 			"cssSelector" : ".author",
-			"boostFactor" : 3
+			"boostFactor" : 50
 		},
 		{
 			"name" : "body",
 			"cssSelector" : ".body",
-			"boostFactor" : 6
+			"boostFactor" : 50
 		},
 		{
-			"name" : "subtitle",
+			"name" : "blagshit",
 			"cssSelector" : ".subtitle",
-			"boostFactor" : 2
+			"boostFactor" : 50
 		},
 		{
-			"name" : "tag",
+			"name" : "blagtag",
 			"cssSelector" : ".tag",
-			"boostFactor" : 3
+			"boostFactor" : 50
 		},
 		{
 			"name" : "category",
 			"cssSelector" : ".category",
-			"boostFactor" : 4
+			"boostFactor" : 50
 		},
 		{
-			"name" : "highlightText",
+			"name" : "highlightNonsense",
 			"cssSelector" : ".notable",
-			"boostFactor" : 4
+			"boostFactor" : 50
 		}
 	]
 }
