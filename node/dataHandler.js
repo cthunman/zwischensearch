@@ -55,13 +55,12 @@ function checkRules(object, rules, callback) {
 	function ruleLoop(i, isType) {
 		if (i < rules.length) {
 			if (isType === true) {
-
 				jsdom.env(util.inspect(object), ["http://code.jquery.com/jquery.js"], function (errors, window) {
 					var check = rules[i]['findSelector'] + '' + rules[i]['testSelector'];
-					var fieldContent = window.$(check);
-					var testText = window.$(check).text();
-					console.log('check ' + check);
-					console.log('fieldContent ' + testText);
+					var testLength = window.$(check).length;
+					if (testLength > 0) {
+						ruleLoop(i + 1, true);
+					}
 				});
 			} else {
 				ruleLoop(rules.length, false);

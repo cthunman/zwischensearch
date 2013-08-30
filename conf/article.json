@@ -14,32 +14,32 @@
 		},
 		{
 			"name" : "author",
-			"cssSelector" : "h1",
+			"cssSelector" : ".author",
 			"boostFactor" : 50
 		},
 		{
 			"name" : "body",
-			"cssSelector" : "h1",
+			"cssSelector" : ".body",
 			"boostFactor" : 50
 		},
 		{
 			"name" : "subtitle",
-			"cssSelector" : "h1",
+			"cssSelector" : ".subtitle",
 			"boostFactor" : 50
 		},
 		{
 			"name" : "tag",
-			"cssSelector" : "h1",
+			"cssSelector" : ".tag",
 			"boostFactor" : 50
 		},
 		{
 			"name" : "category",
-			"cssSelector" : "h1",
+			"cssSelector" : ".category",
 			"boostFactor" : 50
 		},
 		{
 			"name" : "highlightText",
-			"cssSelector" : "h1",
+			"cssSelector" : ".notable",
 			"boostFactor" : 50
 		}
 	]
