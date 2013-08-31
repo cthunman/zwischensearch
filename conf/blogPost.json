@@ -14,37 +14,37 @@
 		{
 			"name" : "title",
 			"cssSelector" : "h1",
-			"boostFactor" : 50
+			"boostFactor" : 1
 		},
 		{
 			"name" : "author",
 			"cssSelector" : ".author",
-			"boostFactor" : 50
+			"boostFactor" : 3
 		},
 		{
 			"name" : "body",
 			"cssSelector" : ".body",
-			"boostFactor" : 50
+			"boostFactor" : 6
 		},
 		{
 			"name" : "blagshit",
 			"cssSelector" : ".subtitle",
-			"boostFactor" : 50
+			"boostFactor" : 2
 		},
 		{
 			"name" : "blagtag",
 			"cssSelector" : ".tag",
-			"boostFactor" : 50
+			"boostFactor" : 3
 		},
 		{
 			"name" : "category",
 			"cssSelector" : ".category",
-			"boostFactor" : 50
+			"boostFactor" : 4
 		},
 		{
 			"name" : "highlightNonsense",
 			"cssSelector" : ".notable",
-			"boostFactor" : 50
+			"boostFactor" : 4
 		}
 	]
 }

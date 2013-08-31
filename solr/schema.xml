@@ -5,6 +5,7 @@
 
     <fields>
         <field name="_id" type="uuid" indexed="true" multiValued="false" required="true" stored="true" />
+        <field name="_schemaId" type="uuid" indexed="true" multiValued="false" required="true" stored="true" />
         <field name="all" type="text" indexed="true" stored="true" termOffsets="true" termPositions="true" termVectors="true" />
         <field name="date" type="long" indexed="true" multiValued="false" stored="true" />
 

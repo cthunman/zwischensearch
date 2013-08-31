@@ -1,6 +1,5 @@
 
 var mongo = require('./mongo');
-var solr = require('./solr');
 var util = require('util');
 var cache = require('memory-cache');
 var fs = require('fs');

@@ -2,6 +2,7 @@
 var dataHandler = require('./dataHandler');
 var mongo = require('./mongo');
 var solr = require('./solr');
+var solrHandler = require('./solrHandler');
 var util = require('util');
 var cache = require('memory-cache');
 var fs = require('fs');
@@ -18,11 +19,14 @@ var blagObj = JSON.parse(fs.readFileSync('../conf/blogPost.json', 'utf8'));
 // 	console.log(util.inspect(results));
 // });
 
-var article = fs.readFileSync('../conf/brokenblag.html', 'utf8');
+var article = fs.readFileSync('../conf/sampleblag.html', 'utf8');
 // var article = fs.readFileSync('../conf/sampleblag.html', 'utf8');
 dataHandler.parseObject(article, function(contentObject) {
 	if (contentObject !== undefined) {
-		console.log('content object ' + util.inspect(contentObject));
+		solrHandler.parseMongoObject(contentObject, function() {
+			console.log('done');
+		});
+		// console.log('content object ' + util.inspect(contentObject));
 	} else {
 		console.log('content object is undefined, try again\n');
 	}
