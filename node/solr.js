@@ -26,5 +26,7 @@ function runSolr() {
 		} else {
 			console.log('Solr response:' + util.inspect(obj));
 		}
-	});	
+	});
 }
+
+runSolr();

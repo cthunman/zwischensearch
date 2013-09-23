@@ -1,7 +1,7 @@
 
 var dataHandler = require('./dataHandler');
 var mongo = require('./mongo');
-var solr = require('./solr');
+// var solr = require('./solr');
 var solrHandler = require('./solrHandler');
 var util = require('util');
 var cache = require('memory-cache');
@@ -19,12 +19,17 @@ var blagObj = JSON.parse(fs.readFileSync('../conf/blogPost.json', 'utf8'));
 // 	console.log(util.inspect(results));
 // });
 
-var article = fs.readFileSync('../conf/sampleblag.html', 'utf8');
+var article = fs.readFileSync('../conf/articleSample.html', 'utf8');
 // var article = fs.readFileSync('../conf/sampleblag.html', 'utf8');
 dataHandler.parseObject(article, function(contentObject) {
 	if (contentObject !== undefined) {
-		solrHandler.parseMongoObject(contentObject, function() {
+		solrHandler.parseMongoObject(contentObject, function(solrObject) {
+			console.log(util.inspect(solrObject));
 			console.log('done');
+
+			solrHandler.addObject(solrObject, function() {
+				console.log('started from the bottom now we here');
+			});
 		});
 		// console.log('content object ' + util.inspect(contentObject));
 	} else {

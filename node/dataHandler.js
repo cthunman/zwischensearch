@@ -1,4 +1,5 @@
 
+var uuid = require('uuid');
 var mongo = require('./mongo');
 var util = require('util');
 var cache = require('memory-cache');
@@ -39,6 +40,7 @@ function parseFields(object, schema, callback) {
 		} else {
 			contentObject['all'] = util.inspect(object);
 			contentObject['schemaId'] = schema['_id'];
+			contentObject['id'] = uuid.v4();
 			callback(contentObject);
 		}
 	} findFieldLoop(0, contentObject);
