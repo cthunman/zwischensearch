@@ -1,6 +1,6 @@
 
-var stringTest = 'http://www.buzzfeed.com/bullshit/bullshit/whatever'
+var mongo = require('./mongo');
+var queueManager = require('./queueManager');
 
-console.log(stringTest);
-console.log(stringTest.search('buzzfeed.com'));
-console.log(stringTest.search('gawker.com'));
+
+queueManager.addToQueue("http://www.buzzfeed.com/test1233");

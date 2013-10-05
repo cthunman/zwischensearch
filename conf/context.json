@@ -1,5 +1,4 @@
 {
-	"mongodb" : "localhost:27017",
 	"solr" : {
 		"domain" : "localhost",
 		"port" : 8080,
@@ -8,5 +7,14 @@
 	"crawl" : [
 		"buzzfeed.com",
 		"gawker.com"
-	]
+	],
+	"mongo" : {
+		"address" : "localhost:27017",
+		"db_name" : "zwischensearch",
+		"queue_collection" : "queue",
+		"schema_collection" : "schema",
+		"data_collection" : "data",
+		"raw_data_collection" : "raw"
+	}
+
 }

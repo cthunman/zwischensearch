@@ -12,10 +12,10 @@ var context = JSON.parse(fs.readFileSync('../conf/context.json', 'utf8'));
 var articleObj = JSON.parse(fs.readFileSync('../conf/article.json', 'utf8'));
 var blagObj = JSON.parse(fs.readFileSync('../conf/blogPost.json', 'utf8'));
 
-// mongo.insert(context, 'schema', blagObj, function(results) {
+// mongo.insert(context, context.mongo.schema_collection, blagObj, function(results) {
 // 	console.log(util.inspect(results));
 // });
-// mongo.insert(context, 'schema', articleObj, function(results) {
+// mongo.insert(context, context.mongo.schema_collection, articleObj, function(results) {
 // 	console.log(util.inspect(results));
 // });
 

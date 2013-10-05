@@ -21,7 +21,7 @@ function parseMongoObject(object, callback) {
 
 	var schemaQuery = { };
 	schemaQuery['_id'] = object['schemaId'];
-	mongo.query(context, 'schema', schemaQuery, function(schemaResults) {
+	mongo.query(context, context.mongo.schema_collection, schemaQuery, function(schemaResults) {
 		if (schemaResults.length > 0) {
 			var schema = schemaResults[0];
 			var schemaFields = schema['fields'];

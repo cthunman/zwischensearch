@@ -26,7 +26,7 @@ var crawler = new Crawler({
 
 	    // $ is a jQuery instance scoped to the server-side DOM of the page
 	    $("a").each(function(index,a) {
-	        // crawler.queue(a.href);
+	        crawler.queue(a.href);
 	        if (a.href.search('buzzfeed.com') != -1 && a.href.search('http://') != -1) {
 	        	console.log('a.href ' + a.href);
 	        }

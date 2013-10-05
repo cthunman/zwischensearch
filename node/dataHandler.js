@@ -13,7 +13,7 @@ function parseObject(object, callback) {
 
 	var context = cache.get('context');
 	// get all schemas
-	mongo.query(context, 'schema', '', function(schemaResults) {
+	mongo.query(context, context.mongo.schema_collection, '', function(schemaResults) {
 
 		function checkRuleLoop(i, foundType) {
 			if (i < schemaResults.length) {

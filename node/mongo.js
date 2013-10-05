@@ -6,7 +6,7 @@ var uuid = require('uuid');
 
 function query(context, collectionName, queryObj, callback) {
 
-	var mongoAddress = 'mongodb://' + context.mongodb + '/node';
+	var mongoAddress = 'mongodb://' + context.mongo.address + '/' + context.mongo.db_name;
 	MongoClient.connect(mongoAddress, function(err, db) {
 
 		if (err) {
@@ -23,7 +23,7 @@ function query(context, collectionName, queryObj, callback) {
 
 function insert(context, collectionName, obj, callback) {
 
-	var mongoAddress = 'mongodb://' + context.mongodb + '/node';
+	var mongoAddress = 'mongodb://' + context.mongo.address + '/' + context.mongo.db_name;
 	MongoClient.connect(mongoAddress, function(err, db) {
 		if (err) {
 		    throw err;
