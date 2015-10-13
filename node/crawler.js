@@ -1,5 +1,4 @@
 
-
 var dataHandler = require('./dataHandler');
 var mongo = require('./mongo');
 // var solr = require('./solr');
@@ -25,7 +24,7 @@ var crawler = new Crawler({
 		}
 
 	    // $ is a jQuery instance scoped to the server-side DOM of the page
-	    $("a").each(function(index,a) {
+	    $("a").each(function (index, a) {
 	        crawler.queue(a.href);
 	        if (a.href.search('buzzfeed.com') != -1 && a.href.search('http://') != -1) {
 	        	console.log('a.href ' + a.href);
@@ -41,5 +40,6 @@ console.log('here');
 
 function onSiteList(href, callback) {
 
-
+	// iterate through sites and if href matches, callback(href)
+	
 }
