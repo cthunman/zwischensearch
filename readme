@@ -1,1 +1,1 @@
-This is the beginning.
+simple node js search engine... not totally functioning, but parts of it are working pretty well. mostly stopped working on it when I realized elastic search is way better than solr
